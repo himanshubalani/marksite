@@ -1,4 +1,4 @@
-# ![Marksite Logo](public\icon1.png) MarkSite
+# ![Marksite Logo](public/icon1.png) MarkSite
 
 ## Project Overview
 MarkSite is a highly utilitarian, distraction-free bookmark and link manager. It allows users to save, tag, and organize useful links with automatic metadata fetching. It features a curated UI where cards act as "living tabs" with color accents derived from the saved domains, complete with real-time search, tag filtering, and automatic favicon fetching.
