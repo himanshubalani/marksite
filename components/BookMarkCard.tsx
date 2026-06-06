@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge"; // We'll need to install this!
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
+import { DeleteButton } from "./DeleteButton";
 
 interface BookmarkCardProps {
   _id: string;
@@ -17,23 +18,27 @@ export function BookmarkCard({ _id, url, title, description, notes, tags }: Book
   return (
     <Card className="flex flex-col h-full hover:border-primary/50 transition-colors bg-card/50">
       <CardHeader className="pb-3 border-b border-border/50">
-        <div className="flex justify-between items-start gap-4">
-          <CardTitle className="text-base font-bold tracking-wide line-clamp-1">
-            {title}
-          </CardTitle>
-          <a 
-            href={url} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-primary transition-colors shrink-0"
-          >
-            <ExternalLinkIcon size={18} />
-          </a>
-        </div>
-        <CardDescription className="text-xs truncate font-mono text-muted-foreground">
-          {url}
-        </CardDescription>
-      </CardHeader>
+     <div className="flex justify-between items-start gap-4">
+       <CardTitle className="text-base font-bold tracking-wide line-clamp-1 flex-1">
+         {title}
+       </CardTitle>
+       <div className="flex items-center gap-1 shrink-0">
+         {/* Added Delete Button Here */}
+         <DeleteButton id={_id} />
+         <a 
+           href={url} 
+           target="_blank" 
+           rel="noopener noreferrer"
+           className="text-muted-foreground hover:text-primary transition-colors p-2"
+         >
+           <ExternalLinkIcon size={18} />
+         </a>
+       </div>
+     </div>
+     <CardDescription className="text-xs truncate font-mono text-muted-foreground">
+       {url}
+     </CardDescription>
+   </CardHeader>
       
       <CardContent className="flex-1 pt-4 pb-2 space-y-4">
         {description && (

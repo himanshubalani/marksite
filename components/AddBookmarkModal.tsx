@@ -12,10 +12,8 @@ import { SubmitButton } from '@/components/SubmitButton';
 export function AddBookmarkModal() {
   const [open, setOpen] = useState(false);
   
-  // useActionState hooks our form up to the Server Action we just wrote
   const [state, formAction] = useActionState(saveBookmark, null);
 
-  // Automatically close the modal when the save is successful
   useEffect(() => {
     if (state?.success) {
       setOpen(false);
@@ -24,10 +22,9 @@ export function AddBookmarkModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" className="border-primary text-primary hover:bg-primary/10 tracking-widest font-bold">
-          + ADD LINK
-        </Button>
+      {/* 💥 THE FIX IS HERE: using the new 'render' prop instead of 'asChild' */}
+      <DialogTrigger render={<Button variant="outline" className="border-primary text-primary hover:bg-primary/10 tracking-widest font-bold" />}>
+        + ADD LINK
       </DialogTrigger>
       
       <DialogContent className="sm:max-w-md border-border bg-card">

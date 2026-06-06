@@ -8,6 +8,7 @@ export interface IBookmark extends Document {
   notes?: string;
   tags: string[];
   createdAt: Date;
+  isPublic: boolean;
 }
 
 const BookmarkSchema = new Schema<IBookmark>({
@@ -35,6 +36,10 @@ const BookmarkSchema = new Schema<IBookmark>({
     type: Date, 
     default: Date.now 
   },
+  isPublic: {
+	type: Boolean,
+	default: false
+}
 });
 
 // Next.js edge case: Ensure we don't redefine the model if it already exists
