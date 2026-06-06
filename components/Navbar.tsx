@@ -1,9 +1,10 @@
 // components/Navbar.tsx
 import Link from 'next/link';
+import { AddBookmarkModal } from './AddBookmarkModal';
 
 export function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 border-b bg-background/95 backdrop-blur">
+    <nav className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 border-b border-border bg-background/95 backdrop-blur">
       <div className="flex items-center gap-8">
         <Link href="/" className="text-lg font-bold tracking-widest text-primary hover:opacity-80 transition-opacity">
           [ MARK_SITE ]
@@ -18,6 +19,10 @@ export function Navbar() {
             EXPLORE
           </Link>
         </div>
+      </div>
+      
+      <div className="flex items-center">
+        <AddBookmarkModal />
       </div>
     </nav>
   );
