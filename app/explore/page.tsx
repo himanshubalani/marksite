@@ -10,7 +10,7 @@ export default async function ExplorePage() {
   await connectToDatabase();
   
   // For the public explore page, maybe we only show the 12 most recent ones
-  const bookmarks = await Bookmark.find().sort({ createdAt: -1 }).limit(12).lean();
+  const bookmarks = await Bookmark.find({ isPublic: true }).sort({ createdAt: -1 }).limit(12).lean();
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">

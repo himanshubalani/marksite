@@ -21,6 +21,8 @@ export async function saveBookmark(prevState: any, formData: FormData) {
     // Clean up tags (e.g., "react, tutorial, web" -> ["react", "tutorial", "web"])
     const tags = tagsRaw.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
 
+	const isPublic = formData.get('isPublic') === 'on';
+
     // Fetch Metadata automatically so the user doesn't have to type titles!
     let title = url;
     let description = '';
@@ -43,6 +45,7 @@ export async function saveBookmark(prevState: any, formData: FormData) {
       description,
       notes,
       tags,
+	  isPublic,
     });
 
     await newBookmark.save();

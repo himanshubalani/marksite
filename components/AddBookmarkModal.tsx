@@ -68,6 +68,18 @@ export function AddBookmarkModal() {
             />
           </div>
 
+            <div className="flex items-center gap-3 p-3 border border-border bg-background/50 rounded-lg">
+            <input 
+              type="checkbox" 
+              id="isPublic" 
+              name="isPublic" 
+              className="w-4 h-4 accent-primary cursor-pointer"
+            />
+            <Label htmlFor="isPublic" className="text-xs uppercase tracking-widest text-foreground cursor-pointer">
+              Make Public (Visible on Explore page)
+            </Label>
+          </div>
+
           {state?.error && (
             <p className="text-sm text-destructive font-bold p-2 border border-destructive/50 bg-destructive/10 rounded">
               {state.error}

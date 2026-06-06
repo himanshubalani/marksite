@@ -12,16 +12,28 @@ interface BookmarkCardProps {
   description?: string;
   notes?: string;
   tags: string[];
+  isPublic?: boolean;
 }
 
-export function BookmarkCard({ _id, url, title, description, notes, tags }: BookmarkCardProps) {
+export function BookmarkCard({ _id, url, title, description, notes, tags, isPublic }: BookmarkCardProps) {
   return (
     <Card className="flex flex-col h-full hover:border-primary/50 transition-colors bg-card/50">
       <CardHeader className="pb-3 border-b border-border/50">
      <div className="flex justify-between items-start gap-4">
-       <CardTitle className="text-base font-bold tracking-wide line-clamp-1 flex-1">
-         {title}
-       </CardTitle>
+       <div className="flex-1">
+         <div className="flex items-center gap-2 mb-1">
+           <CardTitle className="text-base font-bold tracking-wide line-clamp-1">
+             {title}
+           </CardTitle>
+           {/* 💥 NEW: Visual Indicator */}
+           <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded-sm border ${isPublic ? 'border-primary text-primary bg-primary/10' : 'border-muted-foreground text-muted-foreground'}`}>
+             {isPublic ? 'Public' : 'Private'}
+           </span>
+         </div>
+         <CardDescription className="text-xs truncate font-mono text-muted-foreground">
+           {url}
+         </CardDescription>
+       </div>
        <div className="flex items-center gap-1 shrink-0">
          {/* Added Delete Button Here */}
          <DeleteButton id={_id} />
@@ -35,10 +47,7 @@ export function BookmarkCard({ _id, url, title, description, notes, tags }: Book
          </a>
        </div>
      </div>
-     <CardDescription className="text-xs truncate font-mono text-muted-foreground">
-       {url}
-     </CardDescription>
-   </CardHeader>
+    </CardHeader>
       
       <CardContent className="flex-1 pt-4 pb-2 space-y-4">
         {description && (
