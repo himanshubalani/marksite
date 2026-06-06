@@ -1,7 +1,7 @@
 // components/AddBookmarkModal.tsx
 'use client';
 
-import { useState, useActionState, useEffect } from 'react';
+import { useState, useActionState, useEffect, useTransition } from 'react';
 import {
   Dialog,
   DialogTrigger,
@@ -19,11 +19,12 @@ import { PlusIcon } from 'lucide-react';
 
 export function AddBookmarkModal() {
   const [open, setOpen] = useState(false);
+  const [, startTransition] = useTransition();
   const [state, formAction] = useActionState(saveBookmark, null);
 
   useEffect(() => {
-    if (state?.success) setOpen(false);
-  }, [state]);
+    if (state?.success) startTransition(() => setOpen(false));
+  }, [state, startTransition]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
