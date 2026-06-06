@@ -1,35 +1,54 @@
 // app/page.tsx
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { BookmarkIcon, ArrowRightIcon } from 'lucide-react';
 
-// This page is completely static (SSG)
+// Fully static (SSG)
 export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-center justify-center animate-in fade-in duration-700">
-      <div className="w-full max-w-2xl p-10 border border-border bg-card rounded-[12px] shadow-sm text-center space-y-8 relative overflow-hidden">
-        
-        {/* Subtle grid pattern background for the "workbench" feel */}
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5 pointer-events-none" />
+      <div className="w-full max-w-lg text-center space-y-8">
+        {/* Icon */}
+        <div className="flex justify-center">
+           <Image
+                        src="/favicon.png"
+                        alt="Logo"
+                        width={64}
+                        height={64}
+                        className="text-white"
+                      />
+        </div>
 
-        <div className="relative z-10 space-y-4">
-          <p className="text-xs font-bold tracking-[0.2em] text-primary uppercase">
-            System Initialization
-          </p>
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-            The Digital Workbench <br/> for your Links.
+        {/* Copy */}
+        <div className="space-y-3">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
+            Your links, organized.
           </h1>
-          <p className="max-w-md mx-auto text-sm leading-relaxed text-muted-foreground">
-            Save, organize, and explore bookmarks in a highly utilitarian, distraction-free environment. Built for speed.
+          <p className="text-muted-foreground text-base leading-relaxed max-w-sm mx-auto">
+            Save, tag, and revisit the links that matter. Clean, fast, distraction-free.
           </p>
         </div>
 
-        <div className="relative z-10 flex justify-center pt-4">
+        {/* CTA */}
+        <div className="flex items-center justify-center gap-3">
           <Link href="/dashboard">
-            <Button size="lg" className="font-bold tracking-wider rounded-[6px]">
-              ACCESS DASHBOARD
+            <Button className="gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-5">
+              Open dashboard
+              <ArrowRightIcon size={15} />
+            </Button>
+          </Link>
+          <Link href="/explore">
+            <Button variant="outline" className="border-border/60 text-muted-foreground hover:text-foreground px-5">
+              Explore public links
             </Button>
           </Link>
         </div>
+
+        {/* Sub-note */}
+        <p className="text-xs text-muted-foreground/50">
+          SSG landing · SSR dashboard · ISR explore
+        </p>
       </div>
     </div>
   );

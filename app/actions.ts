@@ -1,4 +1,3 @@
-// app/actions.ts
 'use server'
 
 import connectToDatabase from '@/lib/db';
@@ -26,6 +25,7 @@ export async function saveBookmark(prevState: any, formData: FormData) {
     // Fetch Metadata automatically so the user doesn't have to type titles!
     let title = url;
     let description = '';
+	let favicon = '';
 
     try {
       const res = await fetch(`https://api.microlink.io?url=${encodeURIComponent(url)}`);
@@ -33,6 +33,7 @@ export async function saveBookmark(prevState: any, formData: FormData) {
       if (meta.status === 'success') {
         title = meta.data.title || url;
         description = meta.data.description || '';
+		favicon = meta.data.logo?.url || '';
       }
     } catch (e) {
       console.warn('Metadata fetch failed, falling back to raw URL.');
@@ -46,13 +47,12 @@ export async function saveBookmark(prevState: any, formData: FormData) {
       notes,
       tags,
 	  isPublic,
+	  favicon,
     });
 
     await newBookmark.save();
 
-    // 🏆 EVALUATION KEY: This proves you understand ISR/SSR cache management
-    revalidatePath('/dashboard');
-    revalidatePath('/explore');
+    revalidatePath('/', 'layout');
 
     return { success: true };
   } catch (error: any) {

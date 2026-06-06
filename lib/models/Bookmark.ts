@@ -9,6 +9,7 @@ export interface IBookmark extends Document {
   tags: string[];
   createdAt: Date;
   isPublic: boolean;
+  favicon?: string;
 }
 
 const BookmarkSchema = new Schema<IBookmark>({
@@ -39,7 +40,11 @@ const BookmarkSchema = new Schema<IBookmark>({
   isPublic: {
 	type: Boolean,
 	default: false
-}
+},
+  favicon: {
+	type: String,
+	default: '',
+  },
 });
 
 // Next.js edge case: Ensure we don't redefine the model if it already exists

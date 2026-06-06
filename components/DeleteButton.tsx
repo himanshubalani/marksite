@@ -1,30 +1,23 @@
 // components/DeleteButton.tsx
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { TrashIcon } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 
 export function DeleteButton({ id }: { id: string }) {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
 
   async function handleDelete() {
-    if (!confirm('Are you sure you want to delete this bookmark?')) return;
-    
+    if (!confirm('Delete this bookmark?')) return;
     setIsDeleting(true);
     try {
-      // 🏆 EVALUATION KEY: Calling our custom DELETE API Route
-      const res = await fetch(`/api/bookmarks/${id}`, {
-        method: 'DELETE',
-      });
-
+      const res = await fetch(`/api/bookmarks/${id}`, { method: 'DELETE' });
       if (res.ok) {
-        // Refresh the current route to fetch updated SSR data
-        router.refresh(); 
+        router.refresh();
       } else {
-        alert('Failed to delete');
+        alert('Failed to delete.');
       }
     } catch (error) {
       console.error(error);
@@ -34,15 +27,13 @@ export function DeleteButton({ id }: { id: string }) {
   }
 
   return (
-    <Button 
-      variant="ghost" 
-      size="icon" 
-      onClick={handleDelete} 
+    <button
+      onClick={handleDelete}
       disabled={isDeleting}
-      className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-8 w-8"
-      title="Delete Bookmark"
+      title="Delete bookmark"
+      className="flex items-center justify-center w-7 h-7 rounded-md text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-40 disabled:pointer-events-none"
     >
-      <TrashIcon className="w-4 h-4" />
-    </Button>
+      <Trash2Icon size={14} />
+    </button>
   );
 }

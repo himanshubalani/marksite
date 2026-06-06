@@ -1,87 +1,109 @@
 // components/AddBookmarkModal.tsx
-'use client'
+'use client';
 
 import { useState, useActionState, useEffect } from 'react';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { saveBookmark } from '@/app/actions';
 import { SubmitButton } from '@/components/SubmitButton';
+import { PlusIcon } from 'lucide-react';
 
 export function AddBookmarkModal() {
   const [open, setOpen] = useState(false);
-  
   const [state, formAction] = useActionState(saveBookmark, null);
 
   useEffect(() => {
-    if (state?.success) {
-      setOpen(false);
-    }
+    if (state?.success) setOpen(false);
   }, [state]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {/* 💥 THE FIX IS HERE: using the new 'render' prop instead of 'asChild' */}
-      <DialogTrigger render={<Button variant="outline" className="border-primary text-primary hover:bg-primary/10 tracking-widest font-bold" />}>
-        + ADD LINK
+      <DialogTrigger
+        render={
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5 text-sm font-medium border-border/60 hover:border-indigo-500/50 hover:text-indigo-400 hover:bg-indigo-500/5 transition-colors"
+          />
+        }
+      >
+        <PlusIcon size={14} />
+        Add bookmark
       </DialogTrigger>
-      
-      <DialogContent className="sm:max-w-md border-border bg-card">
+
+      <DialogContent className="sm:max-w-md border-border/60 bg-card">
         <DialogHeader>
-          <DialogTitle className="text-primary tracking-widest uppercase">New Bookmark</DialogTitle>
-          <DialogDescription className="text-muted-foreground">
-            Paste a URL below. Our system will automatically fetch the title and description.
+          <DialogTitle className="text-base font-semibold">New bookmark</DialogTitle>
+          <DialogDescription className="text-muted-foreground text-sm">
+            Paste a URL — title and description are fetched automatically.
           </DialogDescription>
         </DialogHeader>
 
-        <form action={formAction} className="space-y-6 mt-4">
-          <div className="space-y-2">
-            <Label htmlFor="url" className="text-xs uppercase tracking-widest text-muted-foreground">Target URL</Label>
-            <Input 
-              id="url" 
-              name="url" 
-              type="url" 
-              placeholder="https://..." 
-              required 
-              className="font-mono bg-background/50"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="notes" className="text-xs uppercase tracking-widest text-muted-foreground">Personal Notes (Optional)</Label>
-            <Input 
-              id="notes" 
-              name="notes" 
-              placeholder="Why is this useful?" 
-              className="font-mono bg-background/50"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="tags" className="text-xs uppercase tracking-widest text-muted-foreground">Tags (Comma separated)</Label>
-            <Input 
-              id="tags" 
-              name="tags" 
-              placeholder="react, tutorial, UI" 
-              className="font-mono bg-background/50"
-            />
-          </div>
-
-            <div className="flex items-center gap-3 p-3 border border-border bg-background/50 rounded-lg">
-            <input 
-              type="checkbox" 
-              id="isPublic" 
-              name="isPublic" 
-              className="w-4 h-4 accent-primary cursor-pointer"
-            />
-            <Label htmlFor="isPublic" className="text-xs uppercase tracking-widest text-foreground cursor-pointer">
-              Make Public (Visible on Explore page)
+        <form action={formAction} className="space-y-4 mt-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="url" className="text-xs text-muted-foreground">
+              URL
             </Label>
+            <Input
+              id="url"
+              name="url"
+              type="url"
+              placeholder="https://"
+              required
+              className="font-mono text-sm bg-background/50"
+            />
           </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="notes" className="text-xs text-muted-foreground">
+              Notes{' '}
+              <span className="text-muted-foreground/50 font-normal">(optional)</span>
+            </Label>
+            <Input
+              id="notes"
+              name="notes"
+              placeholder="Why is this useful?"
+              className="bg-background/50"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="tags" className="text-xs text-muted-foreground">
+              Tags{' '}
+              <span className="text-muted-foreground/50 font-normal">(comma-separated)</span>
+            </Label>
+            <Input
+              id="tags"
+              name="tags"
+              placeholder="react, tutorial, ui"
+              className="bg-background/50"
+            />
+          </div>
+
+          <label className="flex items-center gap-2.5 cursor-pointer group">
+            <input
+              type="checkbox"
+              id="isPublic"
+              name="isPublic"
+              className="w-4 h-4 rounded accent-indigo-500 cursor-pointer"
+            />
+            <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+              Make public{' '}
+              <span className="text-muted-foreground/50 text-xs">(visible on Explore)</span>
+            </span>
+          </label>
 
           {state?.error && (
-            <p className="text-sm text-destructive font-bold p-2 border border-destructive/50 bg-destructive/10 rounded">
+            <p className="text-sm text-destructive bg-destructive/10 border border-destructive/30 rounded-lg px-3 py-2">
               {state.error}
             </p>
           )}
